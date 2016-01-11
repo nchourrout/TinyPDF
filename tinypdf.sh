@@ -215,7 +215,7 @@ fi
 
 # TODO: Use a counter for filenumber
 NEW_SIZE=$(gdu -s -b $FILEPATH | cut -f1)
-DIFF_SIZE=$((ORIGINAL_SIZE - NEWSIZE))
+DIFF_SIZE=$((ORIGINAL_SIZE - NEW_SIZE))
 DIFF_SIZE_HUMAN=$(gnumfmt --to=iec --suffix=B $DIFF_SIZE)
 
 echo
