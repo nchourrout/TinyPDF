@@ -66,21 +66,21 @@ validate_dpi() {
 
 # compress_file INPUT OUTPUT DPI
 compress_file() {
-	gs					                          \
-	  -q -dNOPAUSE -dBATCH -dSAFER		    \
-	  -sDEVICE=pdfwrite			              \
-	  -dCompatibilityLevel=1.3		        \
-	  -dPDFSETTINGS=/screen			          \
-	  -dEmbedAllFonts=true			          \
-	  -dSubsetFonts=true			            \
-	  -dAutoRotatePages=/None		          \
-	  -dColorImageDownsampleType=/Bicubic	\
-	  -dColorImageResolution="$3"		      \
-	  -dGrayImageDownsampleType=/Bicubic	\
-	  -dGrayImageResolution="$3"		      \
-	  -dMonoImageDownsampleType=/Bicubic	\
-	  -dMonoImageResolution="$3"		      \
-	  -sOutputFile="$2"			              \
+	gs                                       \
+	  -q -dNOPAUSE -dBATCH -dSAFER           \
+	  -sDEVICE=pdfwrite                      \
+	  -dCompatibilityLevel=1.3               \
+	  -dPDFSETTINGS=/screen                  \
+	  -dEmbedAllFonts=true                   \
+	  -dSubsetFonts=true                     \
+	  -dAutoRotatePages=/None                \
+	  -dColorImageDownsampleType=/Bicubic    \
+	  -dColorImageResolution="$3"            \
+	  -dGrayImageDownsampleType=/Bicubic     \
+	  -dGrayImageResolution="$3"             \
+	  -dMonoImageDownsampleType=/Bicubic     \
+	  -dMonoImageResolution="$3"             \
+	  -sOutputFile="$2"                      \
 	  "$1"
 }
 
@@ -100,7 +100,8 @@ compress_with_options() {
     OSIZE="$(echo $(wc -c "$OUTPUT") | cut -f1 -d\ )"
     if [ "$ISIZE" -lt "$OSIZE" ]; then
       e_warning "Input file smaller than the compressed file, keeping the original version"
-      rm $OUTPUT 
+      echo
+      rm "$OUTPUT"
     else
         if $INTERACTIVE_MODE; then
           qlmanage -p "$OUTPUT" &>/dev/null &
@@ -209,7 +210,7 @@ else
     compress_with_options "$f" $DPI $INTERACTIVE
   done < <( find $DIRECTORY -iname "*.pdf" )
   e_bold "Cleaning up temporary files"
-  find $DIRECTORY -type f -name "*$COMPRESSED_SUFFIX" -delete
+  find "$DIRECTORY" -type f -name "*$COMPRESSED_SUFFIX" -exec rm {} +
 fi
 
 # TODO: Use a counter for filenumber
@@ -218,4 +219,4 @@ DIFF_SIZE=$((ORIGINAL_SIZE - NEWSIZE))
 DIFF_SIZE_HUMAN=$(gnumfmt --to=iec --suffix=B $DIFF_SIZE)
 
 echo
-e_success "Compressed $FILENUMBER file(s) ($DIFF_SIZE_HUMAN saved)"
+e_success "Processed $FILENUMBER file(s) ($DIFF_SIZE_HUMAN saved)"
