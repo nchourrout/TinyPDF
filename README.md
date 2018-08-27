@@ -7,7 +7,7 @@ It can prompt you if you wish to keep the original files or if you're happy with
 
 ## Getting started
 
-Requires ghostscript and coreutils: `brew install coreutils ghostcript`
+Requires ghostscript and coreutils: `brew install coreutils ghostscript`
 
 ```bash
 git clone https://github.com/nchourrout/tinypdf.git && cd tinypdf
